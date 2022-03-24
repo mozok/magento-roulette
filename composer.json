@@ -1,6 +1,7 @@
 {
     "name": "mozok/roulette",
     "version": "1.0.0",
+    "minimum-stability": "stable",
     "description": "Metapackage for roulette modules pack.",
     "replace": {
         "mozok/roulette-base": "self.version",
@@ -8,9 +9,7 @@
     },
     "type": "magento2-metapackage",
     "require": {
-        "magento/framework": "*",
-        "mozok/roulette-base": "*",
-        "mozok/roulette-product": "*"
+        "magento/framework": "*"
     },
     "license": [
         "Apache-2.0"
