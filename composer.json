@@ -1,0 +1,36 @@
+{
+    "name": "mozok/roulette",
+    "version": "1.0.0",
+    "description": "Metapackage for roulette modules pack.",
+    "replace": {
+        "mozok/roulette-base": "self.version",
+        "mozok/roulette-product": "self.version"
+    },
+    "type": "magento2-metapackage",
+    "require": {
+        "magento/framework": "*",
+        "mozok/roulette-base": "*",
+        "mozok/roulette-product": "*"
+    },
+    "license": [
+        "Apache-2.0"
+    ],
+    "authors": [
+        {
+            "name": "Evgen Mozok",
+            "email": "mozokevgen@gmail.com",
+            "homepage": "https://www.facebook.com/mozok.e/",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "RouletteBase/registration.php",
+            "RouletteProduct/registration.php"
+        ],
+        "psr-4": {
+            "Mozok\\RouletteBase\\": "RouletteBase",
+            "Mozok\\RouletteProduct\\": "RouletteProduct"
+        }
+    }
+}
