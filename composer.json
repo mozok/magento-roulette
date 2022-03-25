@@ -1,11 +1,12 @@
 {
     "name": "mozok/roulette",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "minimum-stability": "stable",
     "description": "Metapackage for roulette modules pack.",
     "replace": {
         "mozok/roulette-base": "self.version",
-        "mozok/roulette-product": "self.version"
+        "mozok/roulette-product": "self.version",
+        "mozok/roulette-external-request": "self.version"
     },
     "type": "magento2-metapackage",
     "require": {
@@ -25,11 +26,13 @@
     "autoload": {
         "files": [
             "RouletteBase/registration.php",
-            "RouletteProduct/registration.php"
+            "RouletteProduct/registration.php",
+            "RouletteExternalRequest/registration.php"
         ],
         "psr-4": {
             "Mozok\\RouletteBase\\": "RouletteBase",
-            "Mozok\\RouletteProduct\\": "RouletteProduct"
+            "Mozok\\RouletteProduct\\": "RouletteProduct",
+            "Mozok\\RouletteExternalRequest\\": "RouletteExternalRequest"
         }
     }
 }
