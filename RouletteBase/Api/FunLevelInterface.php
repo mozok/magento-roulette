@@ -18,17 +18,27 @@
 namespace Mozok\RouletteBase\Api;
 
 /**
- * Pool class to hold all possible Pockets
+ * Lists Level of Fun for Roulette Pockets
  */
-interface PocketPoolInterface
+interface FunLevelInterface
 {
     /**
-     * Load All available Pockets
-     * Could be limited by maximum Fan Level
-     *
-     * @param int $funLimit Limits is for the weak in spirit
-     * @return \Mozok\RouletteBase\Api\PocketInterface[]
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * Maybe it is not even Fun
      */
-    public function loadPockets(int $funLimit = \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME): array;
+    public const DEFAULT = 0;
+
+    /**
+     * Casual Pocket, nothing special
+     */
+    public const CASUAL = 1;
+
+    /**
+     * Some advanced Fun
+     */
+    public const ADVANCED = 2;
+
+    /**
+     * So Fun, that even hurt
+     */
+    public const EXTREME = 3;
 }

@@ -19,11 +19,17 @@ namespace Mozok\RouletteBase\Console\Command;
 
 use Mozok\RouletteBase\Model\RouletteManager;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Spin extends Command
 {
+    /**
+     * Limit the maximum Fun Level
+     */
+    const FUN_LEVEL = 'funLevel';
+
     /**
      * @var RouletteManager
      */
@@ -50,6 +56,11 @@ class Spin extends Command
     {
         $this->setName('roulette:spin');
         $this->setDescription('Just spin the rulette and see what you get!');
+        $this->addArgument(
+            self::FUN_LEVEL,
+            InputArgument::OPTIONAL,
+            'You can limit maximum Level of Fun if you are a Little Chicken.'
+        );
         parent::configure();
     }
 
@@ -64,8 +75,10 @@ class Spin extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $funLevel = $this->getFunLevel($input);
+
         try {
-            $result = $this->rouletteManager->spin();
+            $result = $this->rouletteManager->spin($funLevel);
             if ($result !== null) {
                 $output->writeln($result);
             }
@@ -73,5 +86,19 @@ class Spin extends Command
             $output->writeln($exception->getMessage());
         }
         return 0;
+    }
+
+    /**
+     * @param InputInterface $input
+     * @return int
+     */
+    private function getFunLevel(InputInterface $input): int
+    {
+        $funLevel = $input->getArgument(self::FUN_LEVEL);
+        if ($funLevel === null || $funLevel > \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME) {
+            $funLevel = \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME;
+        }
+
+        return $funLevel;
     }
 }

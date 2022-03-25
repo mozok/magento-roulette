@@ -53,7 +53,7 @@ class Pool implements PocketPoolInterface
     /**
      * {@inheritDoc}
      */
-    public function getPockets(): array
+    public function loadPockets(int $funLimit = \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME): array
     {
         if ($this->pocketInstances) {
             return $this->pocketInstances;
@@ -62,6 +62,14 @@ class Pool implements PocketPoolInterface
         foreach ($this->pockets as $name => $pocket) {
             if (empty($pocket['class'])) {
                 throw new LocalizedException(__('The parameter "class" is missing. Set the "class" and try again.'));
+            }
+
+            if (empty($pocket['funLevel'])) {
+                $pocket['funLevel'] = \Mozok\RouletteBase\Api\FunLevelInterface::DEFAULT;
+            }
+
+            if ($pocket['funLevel'] > $funLimit) {
+                continue;
             }
 
             $this->pocketInstances[$name] = $this->pocketFactory->create($pocket['class']);

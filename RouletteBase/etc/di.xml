@@ -32,6 +32,7 @@
             <argument name="pockets" xsi:type="array">
                 <item name="simpleText" xsi:type="array">
                     <item name="class" xsi:type="string">\Mozok\RouletteBase\Model\Pocket\SimpleText</item>
+                    <item name="funLevel" xsi:type="const">\Mozok\RouletteBase\Api\FunLevelInterface::DEFAULT</item>
                 </item>
             </argument>
         </arguments>
