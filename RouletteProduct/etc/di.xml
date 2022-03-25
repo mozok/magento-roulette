@@ -24,9 +24,11 @@
             <argument name="pockets" xsi:type="array">
                 <item name="luckyProduct" xsi:type="array">
                     <item name="class" xsi:type="string">\Mozok\RouletteProduct\Model\Pocket\LuckyProduct</item>
+                    <item name="funLevel" xsi:type="const">\Mozok\RouletteBase\Api\FunLevelInterface::CASUAL</item>
                 </item>
                 <item name="badLackProduct" xsi:type="array">
                     <item name="class" xsi:type="string">\Mozok\RouletteProduct\Model\Pocket\BadLackProduct</item>
+                    <item name="funLevel" xsi:type="const">\Mozok\RouletteBase\Api\FunLevelInterface::EXTREME</item>
                 </item>
             </argument>
         </arguments>
