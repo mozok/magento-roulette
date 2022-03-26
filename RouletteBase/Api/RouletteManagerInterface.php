@@ -24,10 +24,11 @@ interface RouletteManagerInterface
 {
     /**
      * Spin the roulette to get a random result
+     * @param int $funLimit Limits is for the weak in spirit
      * @return string|null
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function spin();
+    public function spin(int $funLimit = \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME);
 
     /**
      * Read information about all pockets

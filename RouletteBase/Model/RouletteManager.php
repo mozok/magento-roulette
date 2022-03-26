@@ -42,9 +42,9 @@ class RouletteManager implements RouletteManagerInterface
     /**
      * @inheritdoc
      */
-    public function spin($funLevel = \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME)
+    public function spin(int $funLimit = \Mozok\RouletteBase\Api\FunLevelInterface::EXTREME)
     {
-        $pockets = $this->pool->loadPockets($funLevel);
+        $pockets = $this->pool->loadPockets($funLimit);
         $pocket = $pockets[array_rand($pockets)];
         return $pocket->process();
     }
