@@ -17,7 +17,7 @@
 
 namespace Mozok\RouletteBase\Console\Command;
 
-use Mozok\RouletteBase\Model\RouletteManager;
+use Mozok\RouletteBase\Api\RouletteManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -31,16 +31,16 @@ class Spin extends Command
     const FUN_LEVEL = 'funLevel';
 
     /**
-     * @var RouletteManager
+     * @var RouletteManagerInterface
      */
     private $rouletteManager;
 
     /**
-     * @param RouletteManager $rouletteManager
+     * @param RouletteManagerInterface $rouletteManager
      * @param string|null $name
      */
     public function __construct(
-        RouletteManager $rouletteManager,
+        RouletteManagerInterface $rouletteManager,
         string $name = null
     ) {
         $this->rouletteManager = $rouletteManager;
