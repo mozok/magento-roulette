@@ -17,21 +17,23 @@
 
 namespace Mozok\RouletteExternalRequest\Model\Pocket;
 
+use Mozok\RouletteExternalRequest\Service\GetChuckFact;
+
 /**
  * Pocket with random Chuck Norris fact
  */
-class ChuckRequest implements \Mozok\RouletteBase\Api\PocketInterface
+class ChuckFact implements \Mozok\RouletteBase\Api\PocketInterface
 {
     /**
-     * @var \Mozok\RouletteExternalRequest\Service\ChuckRequest
+     * @var GetChuckFact
      */
     private $chuckRequest;
 
     /**
-     * @param \Mozok\RouletteExternalRequest\Service\ChuckRequest $chuckRequest
+     * @param GetChuckFact $chuckRequest
      */
     public function __construct(
-        \Mozok\RouletteExternalRequest\Service\ChuckRequest $chuckRequest
+        GetChuckFact $chuckRequest
     ) {
         $this->chuckRequest = $chuckRequest;
     }

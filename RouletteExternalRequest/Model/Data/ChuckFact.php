@@ -19,6 +19,9 @@ namespace Mozok\RouletteExternalRequest\Model\Data;
 
 use Magento\Framework\DataObject;
 
+/**
+ * Chuck Norris Fact DataModel
+ */
 class ChuckFact extends DataObject
 {
     const ID = 'id';

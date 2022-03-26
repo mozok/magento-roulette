@@ -17,34 +17,16 @@
 
 namespace Mozok\RouletteExternalRequest\Service;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\ClientFactory;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Psr7\Response;
-use GuzzleHttp\Psr7\ResponseFactory;
-use Magento\Framework\Webapi\Rest\Request;
 use Magento\Framework\Serialize\SerializerInterface;
 use Mozok\RouletteExternalRequest\Model\Data\ChuckFact;
 use Mozok\RouletteExternalRequest\Model\Data\ChuckFactFactory;
-use Psr\Http\Message\ResponseInterface;
 
 /**
  * Get random Chuck Norris Fact
  */
-class ChuckRequest
+class GetChuckFact
 {
-    const API_REQUEST_URI = 'https://api.chucknorris.io/';
-    const API_REQUEST_ENDPOINT = 'jokes/random/';
-
-    /**
-     * @var ResponseFactory
-     */
-    private $responseFactory;
-
-    /**
-     * @var ClientFactory
-     */
-    private $clientFactory;
+    const API_REQUEST_URL = 'https://api.chucknorris.io/jokes/random/';
 
     /**
      * @var ChuckFactFactory
@@ -56,14 +38,22 @@ class ChuckRequest
      */
     private $serializer;
 
+    /**
+     * @var \Mozok\RouletteExternalRequest\Service\DoApiRequest
+     */
+    private $doApiRequest;
+
+    /**
+     * @param DoApiRequest $doApiRequest
+     * @param ChuckFactFactory $chuckFactFactory
+     * @param SerializerInterface $serializer
+     */
     public function __construct(
-        ClientFactory $clientFactory,
-        ResponseFactory $responseFactory,
+        DoApiRequest $doApiRequest,
         ChuckFactFactory $chuckFactFactory,
         SerializerInterface $serializer
     ) {
-        $this->clientFactory = $clientFactory;
-        $this->responseFactory = $responseFactory;
+        $this->doApiRequest = $doApiRequest;
         $this->chuckFactFactory = $chuckFactFactory;
         $this->serializer = $serializer;
     }
@@ -73,7 +63,7 @@ class ChuckRequest
      */
     public function execute(): ChuckFact
     {
-        $response = $this->doRequest(static::API_REQUEST_ENDPOINT);
+        $response = $this->doApiRequest->execute(self::API_REQUEST_URL);
         $responseBody = $response->getBody();
         $responseContent = $responseBody->getContents();
 
@@ -81,42 +71,6 @@ class ChuckRequest
         $chuckFact = $this->chuckFactFactory->create();
 
         return $this->hydrateChuckFact($chuckFact, $responseContent);
-    }
-
-    /**
-     * Do API request with provided params
-     *
-     * @param string $uriEndpoint
-     * @param array<mixed> $params
-     * @param string $requestMethod
-     *
-     * @return ResponseInterface
-     */
-    private function doRequest(
-        string $uriEndpoint,
-        array $params = [],
-        string $requestMethod = Request::HTTP_METHOD_GET
-    ): ResponseInterface {
-        /** @var Client $client */
-        $client = $this->clientFactory->create(['config' => [
-            'base_uri' => self::API_REQUEST_URI
-        ]]);
-
-        try {
-            $response = $client->request(
-                $requestMethod,
-                $uriEndpoint,
-                $params
-            );
-        } catch (GuzzleException $exception) {
-            /** @var Response $response */
-            $response = $this->responseFactory->create([
-                'status' => $exception->getCode(),
-                'reason' => $exception->getMessage()
-            ]);
-        }
-
-        return $response;
     }
 
     /**
