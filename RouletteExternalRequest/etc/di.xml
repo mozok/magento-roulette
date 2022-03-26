@@ -26,6 +26,10 @@
                     <item name="class" xsi:type="string">\Mozok\RouletteExternalRequest\Model\Pocket\ChuckFact</item>
                     <item name="funLevel" xsi:type="const">\Mozok\RouletteBase\Api\FunLevelInterface::CASUAL</item>
                 </item>
+                <item name="randomWeather" xsi:type="array">
+                    <item name="class" xsi:type="string">\Mozok\RouletteExternalRequest\Model\Pocket\RandomWeather</item>
+                    <item name="funLevel" xsi:type="const">\Mozok\RouletteBase\Api\FunLevelInterface::ADVANCED</item>
+                </item>
             </argument>
         </arguments>
     </virtualType>
