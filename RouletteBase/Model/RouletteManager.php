@@ -17,6 +17,7 @@
 
 namespace Mozok\RouletteBase\Model;
 
+use Magento\Framework\Event\ManagerInterface;
 use Mozok\RouletteBase\Api\PocketPoolInterface;
 use Mozok\RouletteBase\Api\RouletteManagerInterface;
 
@@ -25,18 +26,29 @@ use Mozok\RouletteBase\Api\RouletteManagerInterface;
  */
 class RouletteManager implements RouletteManagerInterface
 {
+    const EVENT_ROULETTE_PROCESS_BEFORE = 'roulette_process_before';
+    const EVENT_ROULETTE_PROCESS_AFTER = 'roulette_process_after';
+
     /**
      * @var PocketPoolInterface
      */
     private $pool;
 
     /**
+     * @var ManagerInterface
+     */
+    protected $eventManager;
+
+    /**
      * @param PocketPoolInterface $pool
+     * @param ManagerInterface $eventManager
      */
     public function __construct(
-        PocketPoolInterface $pool
+        PocketPoolInterface $pool,
+        ManagerInterface $eventManager
     ) {
         $this->pool = $pool;
+        $this->eventManager = $eventManager;
     }
 
     /**
@@ -46,7 +58,15 @@ class RouletteManager implements RouletteManagerInterface
     {
         $pockets = $this->pool->loadPockets($funLimit);
         $pocket = $pockets[array_rand($pockets)];
-        return $pocket->process();
+
+        $this->eventManager->dispatch(self::EVENT_ROULETTE_PROCESS_BEFORE, ['pocket' => $pocket]);
+        $result = $pocket->process();
+        $this->eventManager->dispatch(
+            self::EVENT_ROULETTE_PROCESS_AFTER,
+            ['pocket' => $pocket, 'result' => $result]
+        );
+
+        return $result;
     }
 
     /**
